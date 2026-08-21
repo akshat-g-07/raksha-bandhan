@@ -1,0 +1,264 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@source "../node_modules/components";
+
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --background-image-sideBarBackground: linear-gradient(
+    rgba(33, 32, 28, 1),
+    rgba(26, 25, 21, 1)
+  );
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.555 0.163 48.998);
+  --primary-foreground: oklch(0.987 0.022 95.277);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.666 0.179 58.318);
+  --sidebar-primary-foreground: oklch(0.987 0.022 95.277);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+
+  /* Custom saffron range sliders. WebKit fill uses --_p (set inline per input);
+     Firefox uses ::-moz-range-progress. Volume/track difference = input class. */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 9999px;
+      background: linear-gradient(
+        to right,
+        #f89400 var(--_p, 0%),
+        rgba(255, 255, 255, 0.25) var(--_p, 0%)
+      );
+    }
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 16px;
+      width: 16px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background: #f89400;
+      /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); */
+    }
+
+    &::-moz-range-track {
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+    &::-moz-range-progress {
+      height: 6px;
+      border-radius: 9999px;
+      background: #f89400;
+    }
+    &::-moz-range-thumb {
+      height: 16px;
+      width: 16px;
+      border: none;
+      border-radius: 50%;
+      background: #f89400;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* volume: half-size thumb + half-height (3px) track */
+    &.volume-slider {
+      &::-webkit-slider-runnable-track {
+        height: 3px;
+      }
+      &::-webkit-slider-thumb {
+        height: 8px;
+        width: 8px;
+        margin-top: -2.5px;
+      }
+      &::-moz-range-track {
+        height: 3px;
+      }
+      &::-moz-range-progress {
+        height: 3px;
+      }
+      &::-moz-range-thumb {
+        height: 8px;
+        width: 8px;
+      }
+    }
+
+    /* seek: at rest a small rounded cap that rounds the fill's right edge;
+       grows into a full grab handle on hover / drag / keyboard focus. */
+    &.track-slider {
+      &::-webkit-slider-thumb {
+        height: 6px;
+        width: 6px;
+        margin-top: 0;
+        box-shadow: none;
+
+        transition:
+          width 0.15s ease,
+          height 0.15s ease,
+          margin-top 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      &:hover::-webkit-slider-thumb,
+      &:active::-webkit-slider-thumb,
+      &:focus-visible::-webkit-slider-thumb {
+        height: 16px;
+        width: 16px;
+        margin-top: -5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      }
+      &::-moz-range-thumb {
+        height: 6px;
+        width: 6px;
+        transition:
+          width 0.15s ease,
+          height 0.15s ease;
+      }
+      &:hover::-moz-range-thumb,
+      &:active::-moz-range-thumb,
+      &:focus-visible::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}
+
+/* Marquee: scroll overflowing text to reveal the end, pause, snap back, loop.
+   --marquee-distance (negative px) + duration are set inline per element. */
+@keyframes marquee-scroll {
+  0%,
+  10% {
+    transform: translateX(0);
+  }
+  85%,
+  100% {
+    transform: translateX(var(--marquee-distance, 0));
+  }
+}
+
+.marquee {
+  animation: marquee-scroll 6s linear infinite;
+  will-change: transform;
+}
