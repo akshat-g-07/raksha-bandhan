@@ -19,18 +19,21 @@ function jitter(raw, mod) {
   return (Math.imul(raw, 2654435761) >>> 0) % mod;
 }
 
-// Real total-since-launch visitors, a little boosted for display.
+// Real total-since-launch visitors, heavily inflated so the badge looks busy:
+// a lively floor + a slope that keeps climbing with actual traffic, much
+// bigger during the festive season.
 function boostReal(v) {
-  const factor = isFestival() ? 1.6 : 1.25;
-  return Math.max(1, Math.round(v * factor));
+  return isFestival()
+    ? 512 + v * 100 + jitter(v, 200)
+    : 240 + v * 24 + jitter(v, 60);
 }
 
 // Fallback only (no analytics token, e.g. local dev): inflate the simulated
-// random walk so the badge still looks alive.
+// walk into the same visual range as boostReal so there's no jump on load.
 function boostSim(raw) {
   return isFestival()
-    ? Math.max(513, raw * 100 + jitter(raw, 100))
-    : Math.max(26, raw * 10 + jitter(raw, 10));
+    ? 512 + raw * 15 + jitter(raw, 200)
+    : 240 + raw * 4 + jitter(raw, 60);
 }
 
 export default function OnlineCount() {
