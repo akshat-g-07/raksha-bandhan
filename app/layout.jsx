@@ -28,6 +28,7 @@ export const metadata = {
   category: "music",
   alternates: { canonical: "/" },
   formatDetection: { email: false, address: false, telephone: false },
+  other: { "google-adsense-account": "ca-pub-6878576258513373" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
