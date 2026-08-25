@@ -4,7 +4,6 @@
 
 @source "../node_modules/components";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -212,6 +211,7 @@
         height: 6px;
         width: 6px;
         margin-top: 0;
+        margin-left: -3px;
         box-shadow: none;
 
         transition:

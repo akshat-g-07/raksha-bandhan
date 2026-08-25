@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import supabase from "@/lib/supabase";
-
-const CHANNEL = "online";
 
 // Raksha Bandhan window (Aug 26–29, 2026) in IST, a fixed UTC+5:30 (no DST).
 function isFestival(now = new Date()) {
@@ -22,58 +19,71 @@ function jitter(raw, mod) {
   return (Math.imul(raw, 2654435761) >>> 0) % mod;
 }
 
-// Inflate the real presence count for display only (identical on every client).
-function boostCount(raw) {
+// Real total-since-launch visitors, a little boosted for display.
+function boostReal(v) {
+  const factor = isFestival() ? 1.6 : 1.25;
+  return Math.max(1, Math.round(v * factor));
+}
+
+// Fallback only (no analytics token, e.g. local dev): inflate the simulated
+// random walk so the badge still looks alive.
+function boostSim(raw) {
   return isFestival()
     ? Math.max(513, raw * 100 + jitter(raw, 100))
     : Math.max(26, raw * 10 + jitter(raw, 10));
 }
 
 export default function OnlineCount() {
-  const [count, setCount] = useState(1);
-  // Pure function of the shared count -> same number for everyone, hydration-safe.
-  const display = boostCount(count);
+  // Starts as the simulated base (hydration-safe: deterministic on first render);
+  // swaps to the real Vercel total once /api/online responds.
+  const [count, setCount] = useState(38);
+  const [isReal, setIsReal] = useState(false);
 
+  // Pull the real total from our server route (which holds the secret token).
   useEffect(() => {
-    // No Supabase env configured -> simulated count so dev/preview still works.
-    if (!supabase) {
-      setCount(38);
-      let timer;
-      const tick = () => {
-        setCount((n) => {
-          const dir = Math.random() < (n < 36 ? 0.58 : 0.42) ? 1 : -1;
-          return Math.max(
-            14,
-            Math.min(58, n + dir * (1 + Math.floor(Math.random() * 3))),
-          );
-        });
-        timer = setTimeout(tick, 2500 + Math.random() * 3500);
-      };
-      timer = setTimeout(tick, 2500 + Math.random() * 3500);
-      return () => clearTimeout(timer);
-    }
-
-    const key =
-      typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : String(Math.random());
-
-    const channel = supabase.channel(CHANNEL, {
-      config: { presence: { key } },
-    });
-
-    channel
-      .on("presence", { event: "sync" }, () => {
-        setCount(Math.max(1, Object.keys(channel.presenceState()).length));
-      })
-      .subscribe((status) => {
-        if (status === "SUBSCRIBED") channel.track({ online_at: Date.now() });
-      });
-
+    let active = true;
+    const load = async () => {
+      try {
+        const r = await fetch("/api/online", { cache: "no-store" });
+        const j = await r.json();
+        if (active && typeof j?.visitors === "number") {
+          setCount(j.visitors);
+          setIsReal(true);
+        }
+      } catch {
+        /* keep the simulated fallback */
+      }
+    };
+    load();
+    const id = setInterval(load, 60000);
     return () => {
-      supabase.removeChannel(channel);
+      active = false;
+      clearInterval(id);
     };
   }, []);
+
+  // Simulated random walk until/unless real data arrives (keeps dev lively).
+  useEffect(() => {
+    if (isReal) return;
+    let timer;
+    const tick = () => {
+      setCount((n) => {
+        const dir = Math.random() < (n < 36 ? 0.58 : 0.42) ? 1 : -1;
+        return Math.max(
+          14,
+          Math.min(58, n + dir * (1 + Math.floor(Math.random() * 3))),
+        );
+      });
+      timer = setTimeout(tick, 2500 + Math.random() * 3500);
+    };
+    timer = setTimeout(tick, 2500 + Math.random() * 3500);
+    return () => clearTimeout(timer);
+  }, [isReal]);
+
+  // en-US locale forces identical grouping on server + client (no hydration drift).
+  const display = (isReal ? boostReal(count) : boostSim(count)).toLocaleString(
+    "en-US",
+  );
 
   return (
     <span
@@ -85,7 +95,7 @@ export default function OnlineCount() {
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.9)]" />
       </span>
       <span className="tabular-nums">{display}</span>
-      <span className="text-white/70">online</span>
+      <span className="text-white/70">visitors</span>
     </span>
   );
 }

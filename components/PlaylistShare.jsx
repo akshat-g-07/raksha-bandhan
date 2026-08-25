@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 function SpotifyIcon(props) {
   return (
@@ -17,23 +18,23 @@ function YouTubeMusicIcon(props) {
 }
 
 const PLAYLISTS = [
-  {
-    label: (
-      <span className="inline-flex items-start">
-        Spotify <ArrowUpRight size={10} />
-      </span>
-    ),
-    href: "https://open.spotify.com/playlist/2AVjI8Z57bqMJVtU3V9X1Q",
-    Icon: SpotifyIcon,
-    brand: "#1DB954",
-  },
+  // {
+  //   label: (
+  //     <span className="inline-flex items-start">
+  //       Spotify <ArrowUpRight size={10} />
+  //     </span>
+  //   ),
+  //   href: siteConfig.links.spotify,
+  //   Icon: SpotifyIcon,
+  //   brand: "#1DB954",
+  // },
   {
     label: (
       <span className="inline-flex items-start">
         YouTube Music <ArrowUpRight size={10} />
       </span>
     ),
-    href: "https://music.youtube.com/playlist?list=PLVdSJtgLgaNg&si=jOtXbqY6ug0FC-Zn",
+    href: siteConfig.links.youtubeMusic,
     Icon: YouTubeMusicIcon,
     brand: "#FF0000",
   },

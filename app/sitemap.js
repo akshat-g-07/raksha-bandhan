@@ -1,14 +1,19 @@
 import { trackList } from "@/lib/tracks";
-
-const base =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://raksha-bandhan.vercel.app";
+import { siteConfig } from "@/config/site";
 
 export default function sitemap() {
+  const lastModified = new Date();
   return [
-    { url: base, changeFrequency: "weekly", priority: 1 },
+    {
+      url: siteConfig.url,
+      lastModified,
+      changeFrequency: "daily",
+      priority: 1,
+    },
     ...trackList.map((t) => ({
-      url: `${base}/songs/${t.slug}`,
-      changeFrequency: "monthly",
+      url: `${siteConfig.url}/songs/${t.slug}`,
+      lastModified,
+      changeFrequency: "weekly",
       priority: 0.9,
     })),
   ];

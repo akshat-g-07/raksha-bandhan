@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import tracks from "@/data/tracks.json";
-import { recordPlay } from "@/lib/stats";
+import { track as trackEvent } from "@vercel/analytics";
 import {
   Sheet,
   SheetContent,
@@ -137,7 +137,8 @@ export default function Player({ startId }) {
               const vid = e.target.getVideoData?.().video_id;
               if (vid && vid !== lastPlayRef.current) {
                 lastPlayRef.current = vid;
-                recordPlay(vid);
+                const meta = tracks.find((t) => t.youtubeId === vid);
+                trackEvent("play", { id: vid, title: meta?.title ?? vid });
               }
             } else if (e.data === state.PAUSED) setPlaying(false);
             else if (e.data === state.ENDED) playAt(pick(indexRef.current, 1));
