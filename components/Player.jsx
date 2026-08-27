@@ -316,7 +316,7 @@ export default function Player({ startId }) {
                     volumeOpen ? "w-24" : "pointer-events-none w-0"
                   }`}
                 >
-                  <div className="rounded-full px-3 py-2">
+                  <div className="rounded-full px-3 py-2 max-md:w-fit">
                     <input
                       type="range"
                       min={0}
@@ -326,7 +326,7 @@ export default function Player({ startId }) {
                       onChange={onVolume}
                       aria-label="Volume"
                       style={{ "--_p": `${muted ? 0 : volume}%` }}
-                      className="block w-20 volume-slider"
+                      className="block w-20 max-md:w-10 volume-slider"
                     />
                   </div>
                 </div>
